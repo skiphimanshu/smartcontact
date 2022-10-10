@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Signup Page</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+
+					<div class="my-card mt-1">
+
+						<div th:if="${session.message}"
+							th:classappend=${session.message.type} class="alert">
+
+							<p class="text-center" th:text=${session.message.content}></p>
+							<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+
+						</div>
+
+
+						<div class="container text-center">
+							<img alt="" src="" th:src="@{/img/register.png}" width="70px;">
+						</div>
+						<h2 class="text-center">Register Here !</h2>
+						<!-- Form -->
+						<form novalidate action="" th:action="@{/doRegister}"
+							method="post" th:object="${user}">
+
+							<!-- name field -->
+							<div class="form-group">
+								<label for="name" class="form-label">User Name</label> <input
+									type="text" class="form-control" name="name"
+									placeholder="Enter Your Name"
+									th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+									id="name" aria-describedby="emailHelp" th:value="${user.name}"
+									required />
+
+								<div th:each="e: ${#fields.errors('name')}"
+									id="validationServer03Feedback" th:text="${e}"
+									class="invalid-feedback"></div>
+							</div>
+
+							<!-- End name field -->
+
+							<!-- Email field -->
+							<div class="form-group mt-2">
+								<label for="email" class="form-label">Email</label> <input
+									type="email" class="form-control" name="email"
+									placeholder="Enter Your email"
+									th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
+									id="email" aria-describedby="emailHelp"
+									th:value="${user.email}" required>
+
+								<div th:each="e: ${#fields.errors('email')}"
+									id="validationServer03Feedback" th:text="${e}"
+									class="invalid-feedback"></div>
+							</div>
+
+							<!-- End Email field -->
+
+							<!-- password field -->
+							<div class="form-group mt-2">
+								<label for="password" class="form-label">Password</label> <input
+									type="password" class="form-control" name="password"
+									placeholder="Enter Your Password"
+									th:classappend="${#fields.hasErrors('password')?'is-invalid':''}"
+									id="password" aria-describedby="emailHelp"
+									th:value="${user.password}" required>
+
+								<div th:each="e: ${#fields.errors('password')}"
+									id="validationServer03Feedback" th:text="${e}"
+									class="invalid-feedback"></div>
+
+							</div>
+
+							<!-- End password field -->
+
+							<!-- About filed -->
+							<div class="form-group mt-2">
+								<textarea placeholder="Enter something yourself" name="about"
+									rows="6" cols=""
+									th:classappend="${#fields.hasErrors('about')?'is-invalid':''}"
+									class="form-control" th:text="${user.about}">
+								
+								</textarea>
+
+								<div th:each="e: ${#fields.errors('about')}"
+									id="validationServer03Feedback" th:text="${e}"
+									class="invalid-feedback"></div>
+							</div>
+
+							<!-- term and condition -->
+
+							<div class="form-group from-check mt-2 text-center">
+
+								<input type="checkbox" name="agreement" class="form-check-input"
+									th:classappend="${#fields.hasErrors('agreement')?'is-invalid':''}"
+									id="agreement"> <label for="agreement">Accept
+									terms and condition</label>
+
+								<div th:each="e: ${#fields.errors('agreement')}"
+									id="validationServer03Feedback" th:text="${e}"
+									class="invalid-feedback"></div>
+
+							</div>
+
+
+
+							<div class="container mt-3 text-center">
+
+								<button class="btn btn-primary" type="submit">Register</button>
+								<button class="btn btn-warning" type="reset">Cancel</button>
+							</div>
+						</form>
+						<div class="container text-center mt-2">
+							<p>
+								Already have Account <a href="#" th:href="@{/signin}"
+									style="text-decoration: none;">Login Here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

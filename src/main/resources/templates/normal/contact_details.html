@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Contact page</title>
+</head>
+<body>
+	<section>
+		<div class="container py-5 h-100">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col col-lg-6 mb-4 mb-lg-0">
+					<div class="card mb-3" style="border-radius: .5rem;" th:if="${contact}">
+						<div class="row g-0">
+							<div class="col-md-5 gradient-custom text-center text-white"
+								style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+								<img src="" th:src="@{'/img/'+${contact.image}}" alt="Avatar"
+									class="img-fluid my-5" style="width: 80px;" />
+								<h5 th:text="${contact.name}"></h5>
+								<p th:text="${contact.work}"></p>
+								<i class="far fa-edit mb-5"></i>
+							</div>
+							<div class="col-md-7">
+								<div class="card-body p-4">
+									<h6>Information</h6>
+									<hr class="mt-0 mb-4">
+									<div class="row pt-1">
+										<h6>Phone name</h6>
+										<p th:text="${contact.nickname}">phone name</p>
+									</div>
+									<div class="row pt-1">
+										<h6>Email</h6>
+										<p th:text="${contact.email}">email</p>
+									</div>
+									<div class="row pt-1">
+										<h6>Phone</h6>
+										<p th:text="${contact.phone}">number</p>
+									</div>
+									<h6>Social Media</h6>
+									<hr class="mt-0 mb-4">
+									<div class="row pt-1">
+
+										<div class="d-flex justify-content-start">
+											<a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+											<a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a> <a
+												href="#!"><i class="fab fa-instagram fa-lg me-3"></i></a>
+											<a href="#!" th:href="'https://wa.me/+91'+${contact.phone}"><i class="fab fa-whatsapp fa-lg"></i></a>	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div th:unless="${contact}">
+						<div class="card">
+							<h3>You don't have Permission to this contact...</h3>
+							<h6>Please Access Your Contact</h6>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

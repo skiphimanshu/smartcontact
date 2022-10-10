@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>DashBoard Page</title>
+</head>
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body">
+				<h2 class="text-center">Contacts</h2>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Name</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Email</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${contacts}">
+								<th scope="row" th:text="${'SCM2022'+c.cid}"></th>
+								<td>
+								<img class="contact_photo" alt="profilephoto" src="" th:src="@{'/img/'+${c.image}}" />
+								<span th:text="${c.nickname}"></span></td>
+								<td th:text="${c.phone}">Phone</td>
+								<td>
+								<a href="#" style="text-decoration: none;" th:href="@{'/user/contact/'+${c.cid}}">
+								<span th:text="${c.email}"></span></a></td>
+								<td>
+									<button class="btn btn-danger btn-sm">Delete</button>&nbsp;
+									<button class="btn btn-info btn-sm">Update</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- Pagination -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li th:if="${currentpage != 0}" class="page-item">
+							<a class="page-link" href="#" th:href="@{'/user/contacts/'+${currentpage-1}}">Previous</a></li>
+							
+							<li th:classappend="${currentpage == s-1?'active':''}" th:each="s : ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:href="@{'/user/contacts/'+${s-1}}" class="page-link" href="#"><span th:text="${s}"></span></a></li>
+							
+							<li th:if="${currentpage+1 != totalPages}" class="page-item">
+							<a class="page-link" href="#" th:href="@{'/user/contacts/'+${currentpage+1}}">Next</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>

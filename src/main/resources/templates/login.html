@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Login Page</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row d-flex justify-content-center align-items-center">
+				<div class="col-md-6">
+					<div th:if="${session.message}"
+						th:classappend=${session.message.type} class="alert">
+						<p class="text-center" th:text=${session.message.content}></p>
+						<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+					</div>
+					<div class="card mt-4">
+						<div class="card-body">
+							<form th:action="@{/dologin}" action="#" method="post">
+								<div class="text-center">
+									<img alt="" src="" th:src="@{/img/password.png}" width="70px;">
+								</div>
+								<h2 class="text-center">Please Login</h2>
+
+								<div th:if="${param.error}"
+									class="alert alert-danger text-center" role="alert">Invalid
+									username and password !</div>
+
+								<div th:if="${param.logout}"
+									class="alert alert-success text-center" role="alert">Logout
+									Successfully</div>
+
+								<div class="mb-3">
+									<label for="exampleInputEmail1" class="form-label">User
+										Name</label> <input type="email" class="form-control" name="username"
+										id="exampleInputEmail1" aria-describedby="emailHelp">
+								</div>
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Password</label>
+									<input type="password" class="form-control" name="password"
+										id="exampleInputPassword1">
+								</div>
+								<div class="text-center">
+									<button type="submit" class="btn  btn-primary">LOGIN</button>
+									<button type="reset" class="btn  btn-warning">CANCEL</button>
+								</div>
+							</form>
+							<p class="mb-0 mt-1 text-center">
+								Don't have an account? <a href="#!" th:href="@{/signup/}"
+									style="text-decoration: none;">Register Here</a>
+							</p>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+</body>
+</html>
