@@ -52,6 +52,7 @@ public class UserController {
 	}
 	
 	// user dashboard
+	
 	@RequestMapping("/index")
 	public String dashboard(Model m) {
 		
@@ -60,7 +61,7 @@ public class UserController {
 		return "normal/user_dashboard";
 	}
 	
-	//user add contact
+	//user add contact 
 	
 	@GetMapping("/add-contact")
 	public String addcontact(Model m) {
@@ -69,6 +70,8 @@ public class UserController {
 		m.addAttribute("contact",new Contact());
 		return "normal/user_addcontact";
 	}
+	
+	
 	// save contact to database
 	@PostMapping("/process-contact")
 	public String savecontact(@ModelAttribute Contact contact,@RequestParam("pimage")MultipartFile file,Principal principal,
@@ -78,16 +81,19 @@ public class UserController {
 			
 			if(file.isEmpty()) {
 				
-				contact.setImage("contact.png");
+				contact.setImage("contact.png"+contact.getCid());
 				
 				
 			}else {
 				// save the file url into contact -> database
-				contact.setImage(file.getOriginalFilename());
+				String imgName = file.getOriginalFilename()+contact.getCid();
+				
+				contact.setImage(imgName);
 				
 				// save the file url into folder img
 				File savefile = new ClassPathResource("static/img").getFile();
-				Path path = Paths.get(savefile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				
+				Path path = Paths.get(savefile.getAbsolutePath()+File.separator+imgName);
 				Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
 				System.out.println("image is upload");
 			}
@@ -100,19 +106,20 @@ public class UserController {
 			System.out.println("data"+contact);
 			httpSession.setAttribute("message", new Message("contact Added successfully","alert-success"));
 			
-			return "normal/user_addcontact";
+			return "redirect:/user/contacts/0";
 			
 		}catch (Exception e) {
 			
 			System.out.println(e.getMessage());
 			m.addAttribute("contact", contact);
-			httpSession.setAttribute("messge", new Message("something went wrong","alert-danger"));
+			httpSession.setAttribute("message", new Message("something went wrong","alert-danger"));
 			
 			return "normal/user_addcontact";
 		}		
 	}
 
-	//fetch specify user contact 
+	//fetching specify user contact page wise
+	
 	@GetMapping("/contacts/{page}")
 	public String contacts(@PathVariable("page")Integer page,Model m,Principal principal) {
 		m.addAttribute("title", "contacts - smart contact");
@@ -139,6 +146,9 @@ public class UserController {
 		
 		return "normal/user_profile";
 	}
+	
+	// showing contact details
+	
 	@RequestMapping("/contact/{cid}")
 	public String showContactDetails(@PathVariable("cid")Integer cid,Model m,Principal principal) {
 		String name = principal.getName();
@@ -147,12 +157,36 @@ public class UserController {
 		Contact contact = optional.get();
 		if(user.getId() == contact.getUser().getId()) {
 			m.addAttribute("contact", contact);
-		}
-		
+		}	
 		m.addAttribute("title", contact.getNickname()+" - Details");
 		
-		return "normal/contact_details";
-		
+		return "normal/contact_details";	
 	}
+	
+	//delete contact 
+	
+	@RequestMapping("/delete-contact/{cid}")
+	public String deleteContact(@PathVariable("cid")Integer cid,Principal principal,HttpSession httpSession) {
+		String name = principal.getName();
+		User user = this.userRepo.getUserByUserName(name);
+		Optional<Contact> optional = this.contactRepo.findById(cid);
+		Contact contact = optional.get();
+		
+		if(user.getId() == contact.getUser().getId()) {
+			this.contactRepo.delete(contact);
+			httpSession.setAttribute("message", new Message("Contact Deleted Successfully","alert-success"));
+		}
+		return "redirect:/user/contacts/0";
+	}
+	
+	// update contact details
+	
+	@RequestMapping("/update-contact")
+	public String updateContact(Model m) {
+		m.addAttribute("title", "Update ");
+		return "normal/update_contact";
+	}
+	
+	
 }
 

@@ -31,11 +31,11 @@
 									</div>
 									<div class="row pt-1">
 										<h6>Email</h6>
-										<p th:text="${contact.email}">email</p>
+									<a href="#" th:href="'https://mail.google.com/mail/?view=cm&fs=1&to='+${contact.email}" style="text-decoration: none;"><p th:text="${contact.email}">email</p></a>
 									</div>
 									<div class="row pt-1">
 										<h6>Phone</h6>
-										<p th:text="${contact.phone}">number</p>
+										<a href="#" th:href="'tel:'+${contact.phone}" style="text-decoration: none;"><p th:text="${contact.phone}">number</p></a>
 									</div>
 									<h6>Social Media</h6>
 									<hr class="mt-0 mb-4">

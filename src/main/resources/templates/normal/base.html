@@ -62,14 +62,17 @@
 	<!--Start SideBAr  -->
 
 	<div class="sidebar">
-			<span onclick="togleSidebar()" class="crossbtn">&times;</span> <a
-			href="#" th:href="@{/user/index}" class="item"><i class="fas fa-home"></i> Home</a> <a
-			href="#" th:href="@{/user/contacts/0}" class="item"><i  class="fas fa-address-book"></i>
-			Contacts</a> <a href="#" th:href="@{/user/add-contact}" class="item"><i class="fas fa-user-plus"></i>
-			Add Contact</a> <a href="#" th:href="@{/user/user-profile}" class="item"><i class="fas fa-user"></i>
-			Profile</a> <a href="#" class="item"><i class="fas fa-cog"></i>
-			Settings</a> <a href="#" th:href="@{/logout}" class="item"><i class="fas fa-power-off"></i>
-			Logout</a>
+		<span onclick="togleSidebar()" class="crossbtn">&times;</span> <a
+			href="#" th:href="@{/user/index}" class="item"><i
+			class="fas fa-home"></i> Home</a> <a href="#"
+			th:href="@{/user/contacts/0}" class="item"><i
+			class="fas fa-address-book"></i> Contacts</a> <a href="#"
+			th:href="@{/user/add-contact}" class="item"><i
+			class="fas fa-user-plus"></i> Add Contact</a> <a href="#"
+			th:href="@{/user/user-profile}" class="item"><i
+			class="fas fa-user"></i> Profile</a> <a href="#" class="item"><i
+			class="fas fa-cog"></i> Settings</a> <a href="#" th:href="@{/logout}"
+			class="item"><i class="fas fa-power-off"></i> Logout</a>
 		<div class="divider"></div>
 	</div>
 
@@ -79,7 +82,8 @@
 	<!--Start content  -->
 
 	<div class="content ">
-		<i onclick="togleSidebar()"  style="color: white;" class="fas fa-bars m-3 cts"></i>
+		<i onclick="togleSidebar()" style="color: white;"
+			class="fas fa-bars m-3 cts"></i>
 
 		<div class="container">
 			<div th:replace="${content}"></div>
@@ -99,6 +103,9 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
 		integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
 	<script type="text/javascript" src="" th:src="@{/js/myJs.js}"></script>
 </body>
 </html>

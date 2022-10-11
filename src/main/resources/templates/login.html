@@ -7,9 +7,9 @@
 </head>
 <body>
 	<section>
-		<div class="container">
-			<div class="row d-flex justify-content-center align-items-center">
-				<div class="col-md-6">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-5">
 					<div th:if="${session.message}"
 						th:classappend=${session.message.type} class="alert">
 						<p class="text-center" th:text=${session.message.content}></p>
@@ -51,12 +51,9 @@
 									style="text-decoration: none;">Register Here</a>
 							</p>
 						</div>
-
-
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</section>
 </body>
