@@ -11,7 +11,13 @@
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
 				<div class="col col-lg-6 mb-4 mb-lg-0">
-					<div class="card mb-3" style="border-radius: .5rem;" th:if="${contact}">
+					<div th:if="${session.message}"
+						th:classappend=${session.message.type} class="alert">
+						<p class="text-center" th:text=${session.message.content}></p>
+						<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+					</div>
+					<div class="card mb-3" style="border-radius: .5rem;"
+						th:if="${contact}">
 						<div class="row g-0">
 							<div class="col-md-5 gradient-custom text-center text-white"
 								style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
@@ -19,7 +25,12 @@
 									class="img-fluid my-5" style="width: 80px;" />
 								<h5 th:text="${contact.name}"></h5>
 								<p th:text="${contact.work}"></p>
-								<i class="far fa-edit mb-5"></i>
+
+								<form method="post" action=""
+									th:action="@{'/user/update-contact/'+${contact.cid}}">
+									<a href="javascript:$('form').submit();"><i
+										class="far fa-edit mb-5"></i></a>
+								</form>
 							</div>
 							<div class="col-md-7">
 								<div class="card-body p-4">
@@ -31,11 +42,16 @@
 									</div>
 									<div class="row pt-1">
 										<h6>Email</h6>
-									<a href="#" th:href="'https://mail.google.com/mail/?view=cm&fs=1&to='+${contact.email}" style="text-decoration: none;"><p th:text="${contact.email}">email</p></a>
+										<a href="#"
+											th:href="'https://mail.google.com/mail/?view=cm&fs=1&to='+${contact.email}"
+											style="text-decoration: none;"><p
+												th:text="${contact.email}">email</p></a>
 									</div>
 									<div class="row pt-1">
 										<h6>Phone</h6>
-										<a href="#" th:href="'tel:'+${contact.phone}" style="text-decoration: none;"><p th:text="${contact.phone}">number</p></a>
+										<a href="#" th:href="'tel:'+${contact.phone}"
+											style="text-decoration: none;"><p
+												th:text="${contact.phone}">number</p></a>
 									</div>
 									<h6>Social Media</h6>
 									<hr class="mt-0 mb-4">
@@ -44,8 +60,9 @@
 										<div class="d-flex justify-content-start">
 											<a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
 											<a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a> <a
-												href="#!"><i class="fab fa-instagram fa-lg me-3"></i></a>
-											<a href="#!" th:href="'https://wa.me/+91'+${contact.phone}"><i class="fab fa-whatsapp fa-lg"></i></a>	
+												href="#!"><i class="fab fa-instagram fa-lg me-3"></i></a> <a
+												href="#!" th:href="'https://wa.me/+91'+${contact.phone}"><i
+												class="fab fa-whatsapp fa-lg"></i></a>
 										</div>
 									</div>
 								</div>
@@ -58,7 +75,7 @@
 							<h6>Please Access Your Contact</h6>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

@@ -7,7 +7,19 @@
 </head>
 <body>
 	<section>
-		<h1 style="color: white;" th:text=${user.name}></h1>
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-body text-center">
+							<h2>Welcome <span th:text="${user.name}"></span></h2>
+							<h5 >Let's Add Your contact in the cloud....</h5>
+							<a href="#" th:href="@{'/user/add-contact'}" class="btn btn-primary">Get Started</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 </body>
 </html>

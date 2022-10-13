@@ -7,7 +7,103 @@
 </head>
 <body>
 	<section>
-		<h1>Update contact profile</h1>
+		<div th:if="${session.message}" th:classappend=${session.message.type}
+			class="alert">
+			<p class="text-center" th:text=${session.message.content}></p>
+			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		</div>
+		<div class="card ms-3">
+			<div class="card-body">
+				<h1 class="text-center">Update Your contact</h1>
+				<div class="container-fluid mt-1">
+					<div class="row">
+						<div class="col-md-10 offset-md-1">
+
+							<!-- contact form -->
+
+							<form action="#" th:object="${contact}"
+								enctype="multipart/form-data" method="post"
+								th:action="@{/user/process-update}" class="mt-2">
+
+								<!-- name -->
+								<div class="input-group flex-nowrap">
+									<span class="input-group-text" id="addon-wrapping"><i
+										class="fa-solid fa-user"></i></span> <input type="text"
+										class="form-control" placeholder="Enter name Here"
+										th:value="${contact.name}" aria-label="name" name="name"
+										aria-describedby="addon-wrapping" required>
+
+								</div>
+								<input type="hidden" th:value="${contact.cid}" name="cid" />
+								<!-- nickname -->
+								<div class="input-group flex-nowrap mt-3">
+									<span class="input-group-text" id="addon-wrapping"><i
+										class="fa-solid fa-plus"></i></span> <input type="text"
+										class="form-control" placeholder="Enter Nick Name Here"
+										th:value="${contact.nickname}" aria-label="nickname"
+										name="nickname" aria-describedby="addon-wrapping" required>
+
+								</div>
+
+								<!-- phone -->
+								<div class="input-group flex-nowrap mt-3">
+									<span class="input-group-text" id="addon-wrapping"><i
+										class="fa-solid fa-phone"></i></span> <input type="number"
+										class="form-control" placeholder="Enter Phone Number Here"
+										th:value="${contact.phone}" aria-label="phone" name="phone"
+										aria-describedby="addon-wrapping" required>
+								</div>
+
+								<!-- email -->
+								<div class="input-group flex-nowrap mt-3">
+									<span class="input-group-text" id="addon-wrapping"><i
+										class="fa-solid fa-at"></i></span> <input type="email"
+										class="form-control" placeholder="Enter mail Here"
+										th:value="${contact.email}" aria-label="email" name="email"
+										aria-describedby="addon-wrapping" required>
+
+								</div>
+
+								<!-- work -->
+								<div class="input-group flex-nowrap mt-3">
+									<span class="input-group-text" id="addon-wrapping"><i
+										class="fa-solid fa-briefcase"></i></span> <input type="text"
+										class="form-control" placeholder="Enter Work Here"
+										th:value="${contact.work}" aria-label="work" name="work"
+										aria-describedby="addon-wrapping" required>
+								</div>
+
+								<!-- description -->
+								<div class="form-group mt-3">
+									<textarea name="description" rows="5" class="form-control"
+										th:text="${contact.description}" cols=""
+										placeholder="Enter Descrption Here" required></textarea>
+
+								</div>
+
+								<!-- image -->
+								<div class="input-group flex-nowrap mt-3">
+									<input type="file" class="form-control" aria-label="image"
+										name="pimage" onchange="readURL(this);"
+										aria-describedby="addon-wrapping"><img
+										alt="conact photo" src="" id="blah"
+										th:src="@{'/img/'+${contact.image}}" class="img-fluid"
+										style="width: 30px;" />
+
+								</div>
+								<div class="container text-center mt-3">
+									<button type="submit" class="btn btn-primary">update
+										Contact</button>
+								</div>
+							</form>
+
+							<!-- End of contact form -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 </body>
 </html>

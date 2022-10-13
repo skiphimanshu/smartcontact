@@ -1,14 +1,14 @@
 const togleSidebar = () => {
-    if($(".sidebar").is(":visible")) {
+	if ($(".sidebar").is(":visible")) {
 
-        $(".sidebar").css("display","none");
-        $(".content").css("margin-left","0%");
+		$(".sidebar").css("display", "none");
+		$(".content").css("margin-left", "0%");
 
-    }else {
+	} else {
 
-        $(".sidebar").css("display","block");
-        $(".content").css("margin-left","20%");
-    }
+		$(".sidebar").css("display", "block");
+		$(".content").css("margin-left", "20%");
+	}
 };
 function deleteContact(cid) {
 	swal({
@@ -20,9 +20,24 @@ function deleteContact(cid) {
 	})
 		.then((willDelete) => {
 			if (willDelete) {
-				window.location="/user/delete-contact/"+cid
+				window.location = "/user/delete-contact/" + cid
 			} else {
 				swal("Your Conact  is safe!");
 			}
 		});
+}
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('#blah')
+				.attr('src', e.target.result)
+				.width(30)
+				.height(40);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
 }

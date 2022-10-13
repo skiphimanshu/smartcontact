@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,152 +42,197 @@ public class UserController {
 	private UserRepo userRepo;
 	@Autowired
 	private ContactRepo contactRepo;
-	
+
 	@ModelAttribute
-	public void addCommonData(Model m,Principal principal) {
+	public void addCommonData(Model m, Principal principal) {
 		String name = principal.getName();
-		
+
 		User user = this.userRepo.getUserByUserName(name);
-		
+
 		m.addAttribute("user", user);
 	}
-	
+
 	// user dashboard
-	
+
 	@RequestMapping("/index")
 	public String dashboard(Model m) {
-		
+
 		m.addAttribute("title", "Dashboard - Smartcontact");
 
 		return "normal/user_dashboard";
 	}
-	
-	//user add contact 
-	
+
+	// user add contact
+
 	@GetMapping("/add-contact")
 	public String addcontact(Model m) {
-		
+
 		m.addAttribute("title", "AddContact - smartcontact");
-		m.addAttribute("contact",new Contact());
+		m.addAttribute("contact", new Contact());
 		return "normal/user_addcontact";
 	}
-	
-	
+
 	// save contact to database
 	@PostMapping("/process-contact")
-	public String savecontact(@ModelAttribute Contact contact,@RequestParam("pimage")MultipartFile file,Principal principal,
-			Model m,HttpSession httpSession) {
-		
+	public String savecontact(@ModelAttribute Contact contact, @RequestParam("pimage") MultipartFile file,
+			Principal principal, Model m, HttpSession httpSession) {
+
 		try {
-			
-			if(file.isEmpty()) {
-				
-				contact.setImage("contact.png"+contact.getCid());
-				
-				
-			}else {
+
+			if (file.isEmpty()) {
+
+				contact.setImage("contact.png");
+
+			} else {
 				// save the file url into contact -> database
-				String imgName = file.getOriginalFilename()+contact.getCid();
-				
+				String imgName = file.getOriginalFilename();
+
 				contact.setImage(imgName);
-				
+
 				// save the file url into folder img
 				File savefile = new ClassPathResource("static/img").getFile();
-				
-				Path path = Paths.get(savefile.getAbsolutePath()+File.separator+imgName);
-				Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+				Path path = Paths.get(savefile.getAbsolutePath() + File.separator + imgName);
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 				System.out.println("image is upload");
+				
 			}
-					
+
 			String name = principal.getName();
 			User user = this.userRepo.getUserByUserName(name);
 			contact.setUser(user);
 			user.getContacts().add(contact);
 			this.userRepo.save(user);
-			System.out.println("data"+contact);
-			httpSession.setAttribute("message", new Message("contact Added successfully","alert-success"));
-			
+			System.out.println("data" + contact);
+			httpSession.setAttribute("message", new Message("contact Added successfully", "alert-success"));
+
 			return "redirect:/user/contacts/0";
-			
-		}catch (Exception e) {
-			
+
+		} catch (Exception e) {
+
 			System.out.println(e.getMessage());
 			m.addAttribute("contact", contact);
-			httpSession.setAttribute("message", new Message("something went wrong","alert-danger"));
-			
+			httpSession.setAttribute("message", new Message("something went wrong", "alert-danger"));
+
 			return "normal/user_addcontact";
-		}		
+		}
 	}
 
-	//fetching specify user contact page wise
-	
+	// fetching specify user contact page wise
+
 	@GetMapping("/contacts/{page}")
-	public String contacts(@PathVariable("page")Integer page,Model m,Principal principal) {
+	public String contacts(@PathVariable("page") Integer page, Model m, Principal principal) {
 		m.addAttribute("title", "contacts - smart contact");
 		String name = principal.getName();
 		User user = this.userRepo.getUserByUserName(name);
-		
+
 		Pageable pageable = PageRequest.of(page, 5);
-		
-		Page<Contact> contacts = this.contactRepo.findContactByUser(user.getId(),pageable);
+
+		Page<Contact> contacts = this.contactRepo.findContactByUser(user.getId(), pageable);
 		m.addAttribute("contacts", contacts);
-		m.addAttribute("currentpage",page);
+		m.addAttribute("currentpage", page);
 		m.addAttribute("totalPages", contacts.getTotalPages());
-		
-		
+
 		return "normal/user_contacts";
 	}
-	
+
 	// fetch user details
-	
+
 	@GetMapping("/user-profile")
 	public String profile(Model m) {
-		m.addAttribute("title","Profile - smartcontact");
-		
-		
+		m.addAttribute("title", "Profile - smartcontact");
+
 		return "normal/user_profile";
 	}
-	
+
 	// showing contact details
-	
+
 	@RequestMapping("/contact/{cid}")
-	public String showContactDetails(@PathVariable("cid")Integer cid,Model m,Principal principal) {
+	public String showContactDetails(@PathVariable("cid") Integer cid, Model m, Principal principal) {
 		String name = principal.getName();
 		User user = this.userRepo.getUserByUserName(name);
 		Optional<Contact> optional = this.contactRepo.findById(cid);
 		Contact contact = optional.get();
-		if(user.getId() == contact.getUser().getId()) {
+		if (user.getId() == contact.getUser().getId()) {
 			m.addAttribute("contact", contact);
-		}	
-		m.addAttribute("title", contact.getNickname()+" - Details");
-		
-		return "normal/contact_details";	
+		}
+		m.addAttribute("title", contact.getNickname() + " - Details");
+
+		return "normal/contact_details";
 	}
-	
-	//delete contact 
-	
+
+	// delete contact
+
 	@RequestMapping("/delete-contact/{cid}")
-	public String deleteContact(@PathVariable("cid")Integer cid,Principal principal,HttpSession httpSession) {
+	public String deleteContact(@PathVariable("cid") Integer cid, Principal principal, HttpSession httpSession) {
 		String name = principal.getName();
 		User user = this.userRepo.getUserByUserName(name);
 		Optional<Contact> optional = this.contactRepo.findById(cid);
 		Contact contact = optional.get();
-		
-		if(user.getId() == contact.getUser().getId()) {
+
+		if (user.getId() == contact.getUser().getId()) {
 			this.contactRepo.delete(contact);
-			httpSession.setAttribute("message", new Message("Contact Deleted Successfully","alert-success"));
+			httpSession.setAttribute("message", new Message("Contact Deleted Successfully", "alert-success"));
 		}
 		return "redirect:/user/contacts/0";
 	}
-	
+
 	// update contact details
-	
-	@RequestMapping("/update-contact")
-	public String updateContact(Model m) {
-		m.addAttribute("title", "Update ");
+
+	@PostMapping("/update-contact/{cid}")
+	public String updateContact(@PathVariable("cid") Integer cid, Model m) {
+		m.addAttribute("title", "update contact");
+		Contact contact = this.contactRepo.findById(cid).get();
+		m.addAttribute("contact", contact);
 		return "normal/update_contact";
 	}
-	
-	
-}
 
+	// process contact update
+	@RequestMapping(value = "/process-update", method = RequestMethod.POST)
+	public String processUpdateHandler(@ModelAttribute Contact contact, @RequestParam("pimage") MultipartFile file,
+			Model m, HttpSession httpSession, Principal principal) {
+
+		Contact oldcontact = this.contactRepo.findById(contact.getCid()).get();
+
+		try {
+
+			if (!file.isEmpty()) {
+
+				// delete old file image
+				File deleteFile = new ClassPathResource("static/img").getFile();
+				File file1 = new File(deleteFile,oldcontact.getImage());
+				file1.delete();
+				
+				
+
+				// set new file image
+				String imgName = contact.getCid()+file.getOriginalFilename();
+				File savefile = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(savefile.getAbsolutePath() + File.separator + imgName);
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
+				contact.setImage(imgName);
+				
+
+			} else {
+				contact.setImage(oldcontact.getImage());
+
+			}
+			User user = this.userRepo.getUserByUserName(principal.getName());
+			contact.setUser(user);
+			this.contactRepo.save(contact);
+			httpSession.setAttribute("message", new  Message("Contact update successfully","alert-success"));
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			m.addAttribute("contact", contact);
+			httpSession.setAttribute("message", new  Message("something went wrong","alert-danger"));
+			return "normal/update_contact";
+		}
+		System.out.println("id" + contact.getCid());
+
+		return "redirect:/user/contact/"+contact.getCid();
+
+	}
+
+}

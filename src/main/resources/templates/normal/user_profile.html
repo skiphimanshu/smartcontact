@@ -7,7 +7,63 @@
 </head>
 <body>
 	<section>
-		<h1>User profile</h1>
+		<div class="container py-4 h-100">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-body">
+							<div class="container text-center">
+								<img alt="Profileimage" class=" img-fluid rounded-circle" src=""
+									th:src="@{'/img/'+${user.imageurl}}"
+									style="height: 200px; width: 300px;" />
+							</div>
+							<h3 class="text-center mt-2" th:text="${user.name}"></h3>
+							<table class="table text-center">
+								<thead>
+									<tr>
+										<th scope="col">#USER-ID</th>
+										<th scope="col">SCMUSER-<span th:text="${user.id}"></span></th>
+									</tr>
+									<tr>
+										<th scope="col">Contacts</th>
+										<td th:text="${#lists.size(user.contacts)}"></td>
+									</tr>
+									<tr>
+										<th scope="col">Email</th>
+										<td th:text="${user.email}"></td>
+									</tr>
+									<tr>
+										<th scope="col">ROLE</th>
+										<td th:text="${user.role}"></td>
+									</tr>
+									<tr>
+										<th scope="col">ACCOUNT STATUS</th>
+										<td>
+											<span th:if="${user.enabled}" th:text="Active"></span>
+											<span th:unless="${user.enabled}" th:text="Deactive"></span>
+										</td>
+									</tr>
+									<tr>
+										<th scope="col">ABOUT</th>
+										<td th:text="${user.about}"></td>
+									</tr>
+								</thead>		
+							</table>
+							<div class="container text-center">
+								<a href="#" th:href="@{/logout}" class="btn btn-danger">Logout</a>
+								<a href="#" class="btn btn-warning">Update</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</section>
 </body>
 </html>
+
+
+
+
