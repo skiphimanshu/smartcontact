@@ -22,7 +22,7 @@
 							<div class="col-md-5 gradient-custom text-center text-white"
 								style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
 								<img src="" th:src="@{'/img/'+${contact.image}}" alt="Avatar"
-									class="img-fluid my-5" style="width: 80px;" />
+									class="img-fluid my-5" style="width: 100px; height:100px;"/>
 								<h5 th:text="${contact.name}"></h5>
 								<p th:text="${contact.work}"></p>
 
@@ -44,14 +44,14 @@
 										<h6>Email</h6>
 										<a href="#"
 											th:href="'https://mail.google.com/mail/?view=cm&fs=1&to='+${contact.email}"
-											style="text-decoration: none;"><p
-												th:text="${contact.email}">email</p></a>
+											style="text-decoration: none;">
+												<p th:text="${contact.email}">email</p></a>
 									</div>
 									<div class="row pt-1">
 										<h6>Phone</h6>
 										<a href="#" th:href="'tel:'+${contact.phone}"
-											style="text-decoration: none;"><p
-												th:text="${contact.phone}">number</p></a>
+											style="text-decoration: none;">
+											<p th:text="${contact.phone}">number</p></a>
 									</div>
 									<h6>Social Media</h6>
 									<hr class="mt-0 mb-4">

@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Contact {
 	@Id
@@ -26,6 +28,7 @@ public class Contact {
 	@Column(length = 1000)
 	private String description;
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 	
 	public Contact() {

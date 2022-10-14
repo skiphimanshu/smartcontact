@@ -9,7 +9,15 @@
 	<section>
 		<div class="card">
 			<div class="card-body">
-				<h2 class="text-center">Contacts</h2>
+				<h2 class="text-center">Your Contacts</h2>
+				<div class="search-container my-3">
+					<input onkeyup="search()" id="search-input" type="text" class="form-control"
+						placeholder="Search your contact">
+					<div class="search-result">
+						<!-- search result -->
+						 
+					</div>
+				</div>
 				<div th:if="${session.message}"
 					th:classappend=${session.message.type} class="alert">
 					<p class="text-center" th:text=${session.message.content}></p>
@@ -36,13 +44,12 @@
 								<td><a href="#" style="text-decoration: none;"
 									th:href="@{'/user/contact/'+${c.cid}}"> <span
 										th:text="${c.email}"></span></a></td>
-								<td><a href="#"
-									th:onclick="|deleteContact(${c.cid})|"
+								<td><a href="#" th:onclick="|deleteContact(${c.cid})|"
 									class="btn btn-danger btn-sm">Delete</a>&nbsp;
-									<form method="post" action="" th:action="@{'/user/update-contact/'+${c.cid}}" class="mt-1">
+									<form method="post" action=""
+										th:action="@{'/user/update-contact/'+${c.cid}}" class="mt-1">
 										<button type="submit" class="btn btn-info btn-sm">Update</button>
-                  					</form>
-									</td>
+									</form></td>
 							</tr>
 						</tbody>
 					</table>
@@ -67,7 +74,6 @@
 				</div>
 			</div>
 		</div>
-
 	</section>
 </body>
 </html>
