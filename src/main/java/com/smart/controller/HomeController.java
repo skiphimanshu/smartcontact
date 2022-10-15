@@ -102,4 +102,8 @@ public class HomeController {
 		m.addAttribute("title", "Login - Smart Contact");
 		return "login";
 	}
+
+	
+	
+	
 }

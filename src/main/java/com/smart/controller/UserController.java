@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +44,8 @@ public class UserController {
 	private UserRepo userRepo;
 	@Autowired
 	private ContactRepo contactRepo;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
@@ -232,7 +236,53 @@ public class UserController {
 		System.out.println("id" + contact.getCid());
 
 		return "redirect:/user/contact/"+contact.getCid();
-
 	}
 
+	// setting Handler
+	@RequestMapping("/user-settings")
+	public String setting(Model m) {
+		m.addAttribute("title","Setting - SCM");
+		
+		return "normal/setting";
+		
+		
+	}
+	// opening change password handler
+	@PostMapping("/change-password")
+	public String changePassword(Model m) {
+		
+		m.addAttribute("title", "Change Password");
+		
+		
+		return "normal/changepassword";
+	}
+	
+	// process password change
+	
+	@PostMapping("/process-changePass")
+	public String processPasswordChange(@RequestParam("oldpassword")String oldpassword,
+			@RequestParam("newpassword")String newpassword,Principal principal,HttpSession session) {
+		 System.out.println(oldpassword);
+		 System.out.println(newpassword);
+		 
+		 String username = principal.getName();
+		 User currentUser = this.userRepo.getUserByUserName(username);
+		 if(this.bCryptPasswordEncoder.matches(oldpassword, currentUser.getPassword())) {
+			 
+			 // change password
+			 currentUser.setPassword(this.bCryptPasswordEncoder.encode(newpassword));
+			 currentUser.setAgreement(true);
+			 this.userRepo.save(currentUser);
+			 session.invalidate();
+			 return "redirect:/signin?change=Password change Successfully...";
+			 
+			 
+		 }else {
+			 // showing error in current page
+			 session.setAttribute("message", new Message("Wrong Old Password","alert-danger"));
+			 return "normal/changepassword";
+			 
+		 }
+	}
+	
 }

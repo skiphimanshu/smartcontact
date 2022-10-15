@@ -28,7 +28,8 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img src="" alt="Logo"
 				th:src="@{/img/phone-book.png}" width="38" height="35"
-				class="d-inline-block align-text-top"> Smart contact manager <span style="font-size: 12px;"> V1.0.0</span>
+				class="d-inline-block align-text-top"> Smart contact manager <span
+				style="font-size: 12px;"> V1.0.0</span>
 			</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -42,8 +43,9 @@
 						aria-current="page" href="#" th:href="@{/}"><i
 							class="fas fa-home fa-lg"></i> Home</a></li>
 
-					<li class="nav-item"><a class="nav-link active" href="#" th:href="@{/user/user-profile}">
-							<i class="fas fa-user fa-lg"></i> <span th:text="${user.name}"></span>
+					<li class="nav-item"><a class="nav-link active" href="#"
+						th:href="@{/user/user-profile}"> <i class="fas fa-user fa-lg"></i>
+							<span th:text="${user.name}"></span>
 					</a></li>
 
 					<li class="nav-item"><a class="nav-link active" href="#"
@@ -71,9 +73,10 @@
 			th:href="@{/user/add-contact}" class="item"><i
 			class="fas fa-user-plus"></i> Add Contact</a> <a href="#"
 			th:href="@{/user/user-profile}" class="item"><i
-			class="fas fa-user"></i> Profile</a> <a href="#" class="item"><i
-			class="fas fa-cog"></i> Settings</a> <a href="#" th:href="@{/logout}"
-			class="item"><i class="fas fa-power-off"></i> Logout</a>
+			class="fas fa-user"></i> Profile</a> <a href="#" th:href="@{/user/user-settings}" class="item"><i
+			 class="fas fa-cog"></i> Settings</a> <a
+			href="#" th:href="@{/logout}" class="item"><i
+			class="fas fa-power-off"></i> Logout</a>
 		<div class="divider"></div>
 	</div>
 
@@ -104,9 +107,9 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
 		integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		
+
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		
+
 	<script type="text/javascript" src="" th:src="@{/js/myJs.js}"></script>
 </body>
 </html>

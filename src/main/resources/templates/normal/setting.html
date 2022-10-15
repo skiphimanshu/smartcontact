@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	th:replace="normal/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>DashBoard Page</title>
+</head>
+<body>
+	<section>
+		<h1>User Setting</h1>
+		<form action="" th:action = "@{/user/change-password}" method="post">
+		
+			<button type="submit" class="btn btn-warning">Change Password</button>
+		</form>
+	</section>
+</body>
+</html>
