@@ -8,7 +8,8 @@
 <body>
 	<section>
 		<div class="container py-5 h-100">
-			<div class="row d-flex justify-content-center align-items-center h-100">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
 				<div class="col-md-5">
 					<div th:if="${session.message}"
 						th:classappend=${session.message.type} class="alert">
@@ -30,26 +31,38 @@
 								<div th:if="${param.logout}"
 									class="alert alert-success text-center" role="alert">Logout
 									Successfully</div>
+									
+								<div th:if="${param.change}"
+									class="alert alert-success text-center" role="alert">
+									<p th:text="${param.change}"></p>
+									</div>
 
 								<div class="mb-3">
 									<label for="exampleInputEmail1" class="form-label">User
 										Name</label> <input type="email" class="form-control" name="username"
-										id="exampleInputEmail1" aria-describedby="emailHelp">
+										placeholder="Enter your email" id="exampleInputEmail1"
+										aria-describedby="emailHelp">
 								</div>
 								<div class="mb-3">
 									<label for="exampleInputPassword1" class="form-label">Password</label>
 									<input type="password" class="form-control" name="password"
-										id="exampleInputPassword1">
+										placeholder="Enter your password" id="exampleInputPassword1">
 								</div>
+
 								<div class="text-center">
 									<button type="submit" class="btn  btn-primary">LOGIN</button>
 									<button type="reset" class="btn  btn-warning">CANCEL</button>
 								</div>
+								<p class="mb-0 mt-2 text-center">
+									<a href="#!" th:href="@{/forgot/}"
+										style="text-decoration: none;">Forgotten password?</a>
+								</p>
+								<hr>
 							</form>
-							<p class="mb-0 mt-1 text-center">
-								Don't have an account? <a href="#!" th:href="@{/signup/}"
-									style="text-decoration: none;">Register Here</a>
-							</p>
+							<div class="d-grid gap-2 col-6 mx-auto mb-0 mt-1 text-center">
+								<a href="#!" th:href="@{/signup/}" class="btn btn-primary">Create
+									A New Account</a>
+							</div>
 						</div>
 					</div>
 				</div>
