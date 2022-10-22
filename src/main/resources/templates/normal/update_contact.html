@@ -48,8 +48,9 @@
 								<!-- phone -->
 								<div class="input-group flex-nowrap mt-3">
 									<span class="input-group-text" id="addon-wrapping"><i
-										class="fa-solid fa-phone"></i></span> <input type="number"
+										class="fa-solid fa-phone"></i></span> <input type="text"
 										class="form-control" placeholder="Enter Phone Number Here"
+										pattern="\d*" maxlength="1"
 										th:value="${contact.phone}" aria-label="phone" name="phone"
 										aria-describedby="addon-wrapping" required>
 								</div>

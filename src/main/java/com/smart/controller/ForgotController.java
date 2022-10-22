@@ -29,7 +29,7 @@ public class ForgotController {
 
 	@RequestMapping("/forgot")
 	public String forgotPass(Model m, HttpSession session) {
-		m.addAttribute("title", "Forgot Password");
+		m.addAttribute("title", "Forgot-Password SCM");
 		return "forgotpass";
 	}
 
@@ -77,7 +77,7 @@ public class ForgotController {
 	@PostMapping("/verify-otp")
 	public String verifyOtp(@RequestParam("otp") Integer otp, HttpSession httpSession, Model m) {
 		
-		m.addAttribute("title", "Verify Otp");
+		m.addAttribute("title", "Verify-Otp SCM");
 
 		Integer myotp = (Integer) httpSession.getAttribute("myotp");
 		String email = (String) httpSession.getAttribute("email");

@@ -61,7 +61,7 @@ public class UserController {
 	@RequestMapping("/index")
 	public String dashboard(Model m) {
 
-		m.addAttribute("title", "Dashboard - Smartcontact");
+		m.addAttribute("title", "Dashboard - SCM");
 
 		return "normal/user_dashboard";
 	}
@@ -71,7 +71,7 @@ public class UserController {
 	@GetMapping("/add-contact")
 	public String addcontact(Model m) {
 
-		m.addAttribute("title", "AddContact - smartcontact");
+		m.addAttribute("title", "AddContact - SCM");
 		m.addAttribute("contact", new Contact());
 		return "normal/user_addcontact";
 	}
@@ -125,7 +125,7 @@ public class UserController {
 
 	@GetMapping("/contacts/{page}")
 	public String contacts(@PathVariable("page") Integer page, Model m, Principal principal) {
-		m.addAttribute("title", "contacts - smart contact");
+		m.addAttribute("title", "contacts - SCM");
 		String name = principal.getName();
 		User user = this.userRepo.getUserByUserName(name);
 
@@ -143,7 +143,7 @@ public class UserController {
 
 	@GetMapping("/user-profile")
 	public String profile(Model m) {
-		m.addAttribute("title", "Profile - smartcontact");
+		m.addAttribute("title", "Profile - SCM");
 
 		return "normal/user_profile";
 	}
@@ -184,7 +184,7 @@ public class UserController {
 
 	@PostMapping("/update-contact/{cid}")
 	public String updateContact(@PathVariable("cid") Integer cid, Model m) {
-		m.addAttribute("title", "update contact");
+		m.addAttribute("title", "update-contact SCM");
 		Contact contact = this.contactRepo.findById(cid).get();
 		m.addAttribute("contact", contact);
 		return "normal/update_contact";
@@ -251,7 +251,7 @@ public class UserController {
 	@PostMapping("/change-password")
 	public String changePassword(Model m) {
 		
-		m.addAttribute("title", "Change Password");
+		m.addAttribute("title", "Change-Password SCM");
 		
 		
 		return "normal/changepassword";

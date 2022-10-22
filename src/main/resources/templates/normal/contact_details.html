@@ -22,7 +22,7 @@
 							<div class="col-md-5 gradient-custom text-center text-white"
 								style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
 								<img src="" th:src="@{'/img/'+${contact.image}}" alt="Avatar"
-									class="img-fluid my-5" style="width: 100px; height:100px;"/>
+									class="img-fluid my-5" style="width: 100px; height: 100px;" />
 								<h5 th:text="${contact.name}"></h5>
 								<p th:text="${contact.work}"></p>
 
@@ -45,13 +45,15 @@
 										<a href="#"
 											th:href="'https://mail.google.com/mail/?view=cm&fs=1&to='+${contact.email}"
 											style="text-decoration: none;">
-												<p th:text="${contact.email}">email</p></a>
+											<p th:text="${contact.email}">email</p>
+										</a>
 									</div>
 									<div class="row pt-1">
 										<h6>Phone</h6>
 										<a href="#" th:href="'tel:'+${contact.phone}"
 											style="text-decoration: none;">
-											<p th:text="${contact.phone}">number</p></a>
+											<p th:text="${contact.phone}">number</p>
+										</a>
 									</div>
 									<h6>Social Media</h6>
 									<hr class="mt-0 mb-4">
@@ -62,7 +64,9 @@
 											<a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a> <a
 												href="#!"><i class="fab fa-instagram fa-lg me-3"></i></a> <a
 												href="#!" th:href="'https://wa.me/+91'+${contact.phone}"><i
-												class="fab fa-whatsapp fa-lg"></i></a>
+												class="fab fa-whatsapp fa-lg me-3"></i></a> <a href="#!"
+												th:href="'https://t.me/+91'+${contact.phone}"><i
+												class="fab fa-telegram fa-lg "></i></a>
 										</div>
 									</div>
 								</div>
